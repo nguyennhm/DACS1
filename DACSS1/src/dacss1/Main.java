@@ -30,7 +30,7 @@ public class Main {
         JFrame frame = new JFrame("Main Page Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        LOGIN LOGIN = new LOGIN();
+        DangNhap LOGIN = new DangNhap();
 //        Book_detail LOGIN = new Book_detail("ABC", 4);
         LOGIN.setTitle("LOGIN");
         LOGIN.setVisible(true);
