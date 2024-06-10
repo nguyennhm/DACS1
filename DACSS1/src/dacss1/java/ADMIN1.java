@@ -5,6 +5,7 @@ package dacss1.java;
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -12,6 +13,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 import static java.lang.Integer.parseInt;
 
@@ -24,14 +26,20 @@ public class ADMIN1 extends javax.swing.JFrame {
      * Creates new form ADMIN1
      */
     public ADMIN1() {
+
         initComponents();
+
         setVisible(true);
         setLocationRelativeTo(null);
         Order.setVisible(false);
-        ProductManager.setVisible(true);
+        INPUT.setVisible(false);
         Bill.setVisible(false);
+        ProductManagement.setVisible(true);
+
+
         loadDataToTableProductM();
         loadDataToTableOrderTable();
+        loadDataToTableProductManagement();
 
         // Get the current date using java.time.LocalDate
         LocalDate currentDate = LocalDate.now();
@@ -48,35 +56,6 @@ public class ADMIN1 extends javax.swing.JFrame {
 
         // Set the formatted date to the JDateChooser
         ProductMDate.setDate(utilDate);
-
-        Connection connection = Main.getConnection();
-        String destinationTableQuery = "SELECT MAX(invoice_id) as max_id FROM invoices";
-        try (PreparedStatement destinationStatement = connection.prepareStatement(destinationTableQuery)) {
-            ResultSet rs = destinationStatement.executeQuery();
-
-            if (rs.next()) {  // Kiểm tra nếu có dữ liệu trong ResultSet
-                String maxId = String.valueOf(rs.getInt("max_id"));
-                ID_bill.setText(maxId);
-            } else {
-                ID_bill.setText("No data found");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        String query = "SELECT sale_date FROM invoices WHERE invoice_id = ?";
-             try(PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, Integer.parseInt(ID_bill.getText()));
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                java.sql.Date sqlDate = resultSet.getDate("sale_date");
-                Sale_date.setDate(sqlDate);
-                jDateChooser1.setDate(sqlDate);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -94,8 +73,9 @@ public class ADMIN1 extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        ProductManager = new javax.swing.JPanel();
+        INPUT = new javax.swing.JPanel();
         jLabel52 = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
         jLabel96 = new javax.swing.JLabel();
@@ -103,12 +83,11 @@ public class ADMIN1 extends javax.swing.JFrame {
         ProductM = new javax.swing.JTable();
         jTextField3 = new javax.swing.JTextField();
         jLabel57 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        Input_mouse = new javax.swing.JButton();
         ProductMDate = new com.toedter.calendar.JDateChooser();
         Order = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -125,6 +104,13 @@ public class ADMIN1 extends javax.swing.JFrame {
         jLabel65 = new javax.swing.JLabel();
         ID_bill = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
+        ProductManager = new javax.swing.JPanel();
+        jLabel53 = new javax.swing.JLabel();
+        jLabel98 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        ProductManagement = new javax.swing.JTable();
+        jTextField4 = new javax.swing.JTextField();
+        jLabel58 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -141,8 +127,8 @@ public class ADMIN1 extends javax.swing.JFrame {
 
         jLabel3.setBackground(new java.awt.Color(229, 228, 228));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/productM.png"))); // NOI18N
-        jLabel3.setText("Product M");
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/productM+.png"))); // NOI18N
+        jLabel3.setText("Nhập sản phẩm");
         jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel3.setOpaque(true);
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -154,7 +140,7 @@ public class ADMIN1 extends javax.swing.JFrame {
         jLabel4.setBackground(new java.awt.Color(229, 228, 228));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/Bill.png"))); // NOI18N
-        jLabel4.setText("Bill");
+        jLabel4.setText("Hóa đơn");
         jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel4.setOpaque(true);
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -166,7 +152,7 @@ public class ADMIN1 extends javax.swing.JFrame {
         jLabel5.setBackground(new java.awt.Color(229, 228, 228));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/order.png"))); // NOI18N
-        jLabel5.setText("Order");
+        jLabel5.setText("Đặt món");
         jLabel5.setToolTipText("");
         jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel5.setOpaque(true);
@@ -178,6 +164,18 @@ public class ADMIN1 extends javax.swing.JFrame {
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/logout.png"))); // NOI18N
         jLabel8.setText("Log out");
+
+        jLabel11.setBackground(new java.awt.Color(229, 228, 228));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/productM.png"))); // NOI18N
+        jLabel11.setText("Quản lí sản phẩm");
+        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel11.setOpaque(true);
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout MenuLayout = new javax.swing.GroupLayout(Menu);
         Menu.setLayout(MenuLayout);
@@ -191,18 +189,21 @@ public class ADMIN1 extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addContainerGap(56, Short.MAX_VALUE))
             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         MenuLayout.setVerticalGroup(
             MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MenuLayout.createSequentialGroup()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 333, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel8)
                 .addContainerGap())
         );
@@ -210,13 +211,13 @@ public class ADMIN1 extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(797, 637));
 
-        ProductManager.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        ProductManager.setPreferredSize(new java.awt.Dimension(797, 188));
+        INPUT.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        INPUT.setPreferredSize(new java.awt.Dimension(797, 188));
 
         jLabel52.setBackground(new java.awt.Color(0, 153, 255));
         jLabel52.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel52.setText("Product Manager");
+        jLabel52.setText("NHẬP SẢN PHẨM");
         jLabel52.setOpaque(true);
 
         jLabel54.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -230,20 +231,20 @@ public class ADMIN1 extends javax.swing.JFrame {
         ProductM.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ProductM.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Tên", "Số lượng", "Đơn giá", "Tổng giá", "Ngày nhập"
+                "Tên", "Số lượng", "Đơn giá", "Tổng giá", "Ngày nhập"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Long.class, java.lang.Long.class, java.lang.Long.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -263,16 +264,14 @@ public class ADMIN1 extends javax.swing.JFrame {
         jScrollPane2.setViewportView(ProductM);
         ProductM.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         if (ProductM.getColumnModel().getColumnCount() > 0) {
-            ProductM.getColumnModel().getColumn(0).setMinWidth(10);
-            ProductM.getColumnModel().getColumn(0).setMaxWidth(50);
+            ProductM.getColumnModel().getColumn(1).setMinWidth(100);
+            ProductM.getColumnModel().getColumn(1).setMaxWidth(150);
             ProductM.getColumnModel().getColumn(2).setMinWidth(100);
             ProductM.getColumnModel().getColumn(2).setMaxWidth(150);
-            ProductM.getColumnModel().getColumn(3).setMinWidth(100);
-            ProductM.getColumnModel().getColumn(3).setMaxWidth(150);
+            ProductM.getColumnModel().getColumn(3).setMinWidth(150);
+            ProductM.getColumnModel().getColumn(3).setMaxWidth(200);
             ProductM.getColumnModel().getColumn(4).setMinWidth(150);
             ProductM.getColumnModel().getColumn(4).setMaxWidth(200);
-            ProductM.getColumnModel().getColumn(5).setMinWidth(150);
-            ProductM.getColumnModel().getColumn(5).setMaxWidth(200);
         }
 
         jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -290,67 +289,72 @@ public class ADMIN1 extends javax.swing.JFrame {
         jLabel57.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel57.setText("Hàng hóa");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jButton1.setText("Thêm sản phẩm mới");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        Input_mouse.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Input_mouse.setText("Thêm sản phẩm mới");
+        Input_mouse.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                Input_mouseMouseClicked(evt);
             }
         });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Input_mouse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                Input_mouseActionPerformed(evt);
             }
         });
 
         ProductMDate.setDateFormatString("yyyy-MM-dd");
         ProductMDate.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        ProductMDate.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                ProductMDatePropertyChange(evt);
+            }
+        });
 
-        javax.swing.GroupLayout ProductManagerLayout = new javax.swing.GroupLayout(ProductManager);
-        ProductManager.setLayout(ProductManagerLayout);
-        ProductManagerLayout.setHorizontalGroup(
-            ProductManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout INPUTLayout = new javax.swing.GroupLayout(INPUT);
+        INPUT.setLayout(INPUTLayout);
+        INPUTLayout.setHorizontalGroup(
+            INPUTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel52, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ProductManagerLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, INPUTLayout.createSequentialGroup()
                 .addGap(103, 103, 103)
                 .addComponent(jLabel57)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel54)
                 .addGap(207, 207, 207))
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(ProductManagerLayout.createSequentialGroup()
+            .addGroup(INPUTLayout.createSequentialGroup()
                 .addGap(80, 80, 80)
-                .addGroup(ProductManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(INPUTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel96)
-                    .addGroup(ProductManagerLayout.createSequentialGroup()
+                    .addGroup(INPUTLayout.createSequentialGroup()
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(217, 217, 217)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(ProductMDate, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(118, 118, 118))
-            .addGroup(ProductManagerLayout.createSequentialGroup()
+            .addGroup(INPUTLayout.createSequentialGroup()
                 .addGap(244, 244, 244)
-                .addComponent(jButton1)
+                .addComponent(Input_mouse)
                 .addContainerGap(354, Short.MAX_VALUE))
         );
-        ProductManagerLayout.setVerticalGroup(
-            ProductManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ProductManagerLayout.createSequentialGroup()
+        INPUTLayout.setVerticalGroup(
+            INPUTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(INPUTLayout.createSequentialGroup()
                 .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
-                .addGroup(ProductManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(INPUTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel54)
                     .addComponent(jLabel57))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(ProductManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(INPUTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(ProductMDate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
-                .addComponent(jButton1)
+                .addComponent(Input_mouse)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel96)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE))
         );
 
         Order.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -359,7 +363,7 @@ public class ADMIN1 extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(0, 153, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Order");
+        jLabel1.setText("ĐẶT MÓN");
         jLabel1.setOpaque(true);
 
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -374,14 +378,11 @@ public class ADMIN1 extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/search.png"))); // NOI18N
-        jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel9.setText("Date");
+        jLabel9.setText("Ngày");
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel10.setText("Search");
+        jLabel10.setText("Tìm kiếm");
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -443,7 +444,7 @@ public class ADMIN1 extends javax.swing.JFrame {
             OrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OrderLayout.createSequentialGroup()
-                .addGap(127, 127, 127)
+                .addGap(98, 98, 98)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel9)
@@ -456,8 +457,6 @@ public class ADMIN1 extends javax.swing.JFrame {
             .addGroup(OrderLayout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(143, 143, 143))
@@ -472,13 +471,12 @@ public class ADMIN1 extends javax.swing.JFrame {
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(OrderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField1)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(27, 27, 27)
                 .addComponent(jLabel51)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 475, Short.MAX_VALUE))
         );
 
         jDateChooser1.addPropertyChangeListener(new PropertyChangeListener() {
@@ -500,11 +498,16 @@ public class ADMIN1 extends javax.swing.JFrame {
 
         Bill.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Bill.setPreferredSize(new java.awt.Dimension(797, 188));
+        Bill.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                BillPropertyChange(evt);
+            }
+        });
 
         jLabel62.setBackground(new java.awt.Color(0, 153, 255));
         jLabel62.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel62.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel62.setText("Bill");
+        jLabel62.setText("HÓA ĐƠN");
         jLabel62.setOpaque(true);
 
         jLabel64.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -573,6 +576,11 @@ public class ADMIN1 extends javax.swing.JFrame {
         Sale_date.setDateFormatString("yyyy-MM-dd");
         Sale_date.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         Sale_date.setFont(new java.awt.Font("Segoe UI", 0, 18));
+        Sale_date.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                Sale_datePropertyChange(evt);
+            }
+        });
 
         jLabel65.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel65.setText("Mã hóa đơn:");
@@ -643,38 +651,170 @@ public class ADMIN1 extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        Sale_date.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                if ("date".equals(evt.getPropertyName())) {
-                    // Handle the date change
-                    Sale_datePropertyChange(evt);
-                }
+        Connection connection = Main.getConnection();
+        String destinationTableQuery = "SELECT MAX(invoice_id) as max_id FROM invoice_details";
+        try (PreparedStatement destinationStatement = connection.prepareStatement(destinationTableQuery)) {
+            ResultSet rs = destinationStatement.executeQuery();
+
+            if (rs.next()) {  // Kiểm tra nếu có dữ liệu trong ResultSet
+                String maxId = String.valueOf(rs.getInt("max_id"));
+                ID_bill.setText(maxId);
+            } else {
+                ID_bill.setText("No data found");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        String query = "SELECT sale_date FROM invoice_details WHERE invoice_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, Integer.parseInt(ID_bill.getText()));
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                java.sql.Date sqlDate = resultSet.getDate("sale_date");
+                Sale_date.setDate(sqlDate);
+                jDateChooser1.setDate(sqlDate);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        ProductManager.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        ProductManager.setPreferredSize(new java.awt.Dimension(797, 188));
+
+        jLabel53.setBackground(new java.awt.Color(0, 153, 255));
+        jLabel53.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel53.setText("QUẢN LÍ SẢN PHẨM");
+        jLabel53.setOpaque(true);
+
+        jLabel98.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel98.setText("Hàng Hóa Trong Kho");
+
+        jScrollPane4.setBackground(new java.awt.Color(255, 255, 255));
+
+        ProductManagement.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ProductManagement.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Tên", "Số lượng", "Số lượng còn lại", "Số lượng bán"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Long.class, java.lang.Short.class, java.lang.Long.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        ProductManagement.setColumnSelectionAllowed(true);
+        ProductManagement.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ProductManagementMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(ProductManagement);
+        ProductManagement.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        if (ProductManagement.getColumnModel().getColumnCount() > 0) {
+            ProductManagement.getColumnModel().getColumn(0).setMinWidth(10);
+            ProductManagement.getColumnModel().getColumn(0).setMaxWidth(50);
+            ProductManagement.getColumnModel().getColumn(2).setMinWidth(100);
+            ProductManagement.getColumnModel().getColumn(2).setMaxWidth(150);
+            ProductManagement.getColumnModel().getColumn(3).setMinWidth(100);
+            ProductManagement.getColumnModel().getColumn(3).setMaxWidth(150);
+            ProductManagement.getColumnModel().getColumn(4).setMinWidth(100);
+            ProductManagement.getColumnModel().getColumn(4).setMaxWidth(150);
+        }
+
+        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField4KeyReleased(evt);
+            }
+        });
+
+        jLabel58.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel58.setText("Hàng hóa");
+
+        javax.swing.GroupLayout ProductManagerLayout = new javax.swing.GroupLayout(ProductManager);
+        ProductManager.setLayout(ProductManagerLayout);
+        ProductManagerLayout.setHorizontalGroup(
+            ProductManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel53, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(ProductManagerLayout.createSequentialGroup()
+                .addGroup(ProductManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ProductManagerLayout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addComponent(jLabel58))
+                    .addGroup(ProductManagerLayout.createSequentialGroup()
+                        .addGap(267, 267, 267)
+                        .addComponent(jLabel98))
+                    .addGroup(ProductManagerLayout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(207, 326, Short.MAX_VALUE))
+        );
+        ProductManagerLayout.setVerticalGroup(
+            ProductManagerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ProductManagerLayout.createSequentialGroup()
+                .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel58)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel98)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 797, Short.MAX_VALUE)
+            .addGap(0, 777, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(ProductManager, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(INPUT, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(Order, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(Order, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(Bill, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(Bill, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(ProductManager, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 645, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(ProductManager, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE))
+                .addComponent(INPUT, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addComponent(Order, javax.swing.GroupLayout.PREFERRED_SIZE, 645, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(Bill, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(ProductManager, javax.swing.GroupLayout.DEFAULT_SIZE, 645, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -684,7 +824,7 @@ public class ADMIN1 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(Menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -697,15 +837,17 @@ public class ADMIN1 extends javax.swing.JFrame {
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
-        ProductManager.setVisible(true);
+        INPUT.setVisible(true);
         Order.setVisible(false);
         Bill.setVisible(false);
+        ProductManager.setVisible(false);
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         Order.setVisible(true);
-        ProductManager.setVisible(false);
+        INPUT.setVisible(false);
         Bill.setVisible(false);
+        ProductManager.setVisible(false);
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -719,24 +861,24 @@ public class ADMIN1 extends javax.swing.JFrame {
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
         Order.setVisible(false);
-        ProductManager.setVisible(false);
+        INPUT.setVisible(false);
         Bill.setVisible(true);
+        ProductManager.setVisible(false);
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void loadDataToTableProductM() {
-        String sql = "SELECT * FROM products ORDER BY product_id ASC";
+        String sql = "SELECT * FROM products_detail ORDER BY entry_date ASC";
         Connection connection = Main.getConnection();
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             // Lấy DefaultTableModel từ JTable và xóa các hàng hiện tại
             DefaultTableModel model = (DefaultTableModel) ProductM.getModel();
-            model.setRowCount(0);
+            model.setRowCount(0); // Xóa tất cả các hàng hiện có
 
             // Lấy dữ liệu từ ResultSet và đưa vào DefaultTableModel
             while (resultSet.next()) {
                 Object[] row = {
-                        resultSet.getObject("product_id"),
                         resultSet.getObject("name"),
                         resultSet.getObject("quantity"),
                         resultSet.getObject("unit_price"),
@@ -746,17 +888,10 @@ public class ADMIN1 extends javax.swing.JFrame {
                 model.addRow(row);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                if (connection != null && !connection.isClosed()) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            e.printStackTrace();
         }
     }
+
 
 
     private void loadDataToTableOrderTable() {
@@ -773,7 +908,7 @@ public class ADMIN1 extends javax.swing.JFrame {
             while (resultSet.next()) {
                 Object[] row = {
                         resultSet.getObject("name"),
-                        resultSet.getObject("quantity"),
+                        resultSet.getObject("quantity_remain"),
                         resultSet.getObject("unit_price")
                 };
                 model.addRow(row);
@@ -791,14 +926,40 @@ public class ADMIN1 extends javax.swing.JFrame {
         }
     }
 
+    private void loadDataToTableProductManagement() {
+        String sql = "SELECT * FROM products ORDER BY product_id ASC";
+        Connection connection = Main.getConnection();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+            // Lấy DefaultTableModel từ JTable và xóa các hàng hiện tại
+            DefaultTableModel model = (DefaultTableModel) ProductManagement.getModel();
+            model.setRowCount(0);
+
+            // Lấy dữ liệu từ ResultSet và đưa vào DefaultTableModel
+            while (resultSet.next()) {
+                Object[] row = {
+                        resultSet.getObject("product_id"),
+                        resultSet.getObject("name"),
+                        resultSet.getObject("quantity"),
+                        resultSet.getObject("quantity_remain"),
+                        resultSet.getObject("total_sold")
+                };
+                model.addRow(row);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private void Input_mouseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Input_mouseActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_Input_mouseActionPerformed
 
     private void jTextField3KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyReleased
         // TODO add your handling code here:
-        String sql = "SELECT * FROM products WHERE name LIKE ?";
+        String sql = "SELECT * FROM products_detail WHERE name LIKE ?";
         Connection connection = Main.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -812,7 +973,6 @@ public class ADMIN1 extends javax.swing.JFrame {
 
                 while (resultSet.next()) {
                     Object[] row = {
-                            resultSet.getObject("product_id"),
                             resultSet.getObject("name"),
                             resultSet.getObject("quantity"),
                             resultSet.getObject("unit_price"),
@@ -830,7 +990,7 @@ public class ADMIN1 extends javax.swing.JFrame {
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
-        String sql = "SELECT * FROM products WHERE name LIKE ?";
+        String sql = "SELECT * FROM products_detail WHERE name LIKE ?";
         Connection connection = Main.getConnection();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -868,7 +1028,7 @@ public class ADMIN1 extends javax.swing.JFrame {
             if (selectedRow != -1) {  // Kiểm tra xem có hàng được chọn không
                 String name = OrderTable.getValueAt(selectedRow, 0).toString();
                 String up = OrderTable.getValueAt(selectedRow, 2).toString();
-                Order Order_tab = new Order(name, up, ID_bill.getText());
+                Order Order_tab = new Order(name, up, ID_bill.getText(), Sale_date.getDate());
                 Order_tab.setTitle("Đặt món");
                 Order_tab.setVisible(true);
                 Order_tab.pack();
@@ -878,16 +1038,16 @@ public class ADMIN1 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_OrderTableMouseClicked
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void Input_mouseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Input_mouseMouseClicked
         // TODO add your handling code here:
         AddNew news = new AddNew();
 //        Book_detail LOGIN = new Book_detail("ABC", 4);
-        news.setTitle("LOGIN");
+        news.setTitle("Nhập sản phẩm mới");
         news.setVisible(true);
         news.pack();
         news.setLocationRelativeTo(null);
         this.dispose();
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_Input_mouseMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -898,9 +1058,9 @@ public class ADMIN1 extends javax.swing.JFrame {
         if (evt.getClickCount() == 1) {
             int selectedRow = ProductM.getSelectedRow();
             if (selectedRow != -1) {  // Kiểm tra xem có hàng được chọn không
-                String name = ProductM.getValueAt(selectedRow, 1).toString();
-                String up = ProductM.getValueAt(selectedRow, 3).toString();
-                checkinfo Order_tab = new checkinfo(name, up);
+                String name = ProductM.getValueAt(selectedRow, 0).toString();
+                String up = ProductM.getValueAt(selectedRow, 2).toString();
+                checkinfo Order_tab = new checkinfo(name);
                 Order_tab.setTitle("Kiểm tra san phẩm");
                 Order_tab.setVisible(true);
                 Order_tab.pack();
@@ -938,6 +1098,148 @@ public class ADMIN1 extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2MouseClicked
 
+    private void ProductManagementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProductManagementMouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 1) {
+            int selectedRow = ProductManagement.getSelectedRow();
+            if (selectedRow != -1) {  // Kiểm tra xem có hàng được chọn không
+                String name = ProductManagement.getValueAt(selectedRow, 1).toString();
+                String up = ProductManagement.getValueAt(selectedRow, 2).toString();
+                checkinfo Order_tab = new checkinfo(name);
+                Order_tab.setTitle("Kiểm tra san phẩm");
+                Order_tab.setVisible(true);
+                Order_tab.pack();
+                Order_tab.setLocationRelativeTo(null);
+                this.dispose();
+            }
+        }
+    }//GEN-LAST:event_ProductManagementMouseClicked
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyReleased
+        // TODO add your handling code here:
+        String sql = "SELECT * FROM products WHERE name LIKE ?";
+        Connection connection = Main.getConnection();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            // Đặt giá trị cho tham số và thêm % vào cả hai đầu để tìm kiếm giống với mọi phần
+            preparedStatement.setString(1, "%" + jTextField4.getText() + "%");
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                // Lấy dữ liệu từ ResultSet và đưa vào DefaultTableModel
+                DefaultTableModel model = (DefaultTableModel) ProductManagement.getModel();
+                model.setRowCount(0); // Xóa dữ liệu cũ trong bảng trước khi thêm dữ liệu mới
+
+                while (resultSet.next()) {
+                    Object[] row = {
+                            resultSet.getObject("product_id"),
+                            resultSet.getObject("name"),
+                            resultSet.getObject("quantity"),
+                            resultSet.getObject("quantity_remain"),
+                            resultSet.getObject("total_sold")
+                    };
+                    model.addRow(row);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }//GEN-LAST:event_jTextField4KeyReleased
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        // TODO add your handling code here:
+        Order.setVisible(false);
+        INPUT.setVisible(false);
+        Bill.setVisible(false);
+        ProductManager.setVisible(true);
+    }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void BillPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_BillPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BillPropertyChange
+
+    private void Sale_datePropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_Sale_datePropertyChange
+        // TODO add your handling code here:
+        String sql = "SELECT * FROM invoice_details WHERE invoice_id = ?";
+        Connection connection = Main.getConnection();
+
+        // Check if ID_bill text is empty or not a valid integer
+        if (ID_bill.getText().isEmpty()) {
+            System.out.println("ID_bill is empty");
+            return; // Exit the method
+        }
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            // Use getText() to retrieve the text content of ID_bill
+            int idBill = Integer.parseInt(ID_bill.getText());
+            preparedStatement.setInt(1, idBill);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Làm mới dữ liệu trong bảng (OrderTable)
+            refreshTable(resultSet);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            System.out.println("Invalid ID format: " + ID_bill.getText());
+        }
+    }//GEN-LAST:event_Sale_datePropertyChange
+
+
+    private void ProductMDatePropertyChange(java.beans.PropertyChangeEvent evt) {                                            
+        // Get the selected date from Sale_date
+        java.util.Date selectedDate = ProductMDate.getDate();
+
+        if (selectedDate != null) {
+            // Format the date into a suitable format for the database
+            java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
+
+            // Call the method to refresh the table
+            refreshProductTable(sqlDate);
+        }
+    }
+
+
+    // Method to refresh the product table
+    private void refreshProductTable(java.sql.Date sqlDate) {
+        String sql = "SELECT * FROM products_detail WHERE entry_date < ?";
+        try (Connection connection = Main.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            // Set the parameter for the query
+            preparedStatement.setDate(1, sqlDate);
+
+            // Execute the query
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                // Refresh the table data
+                DefaultTableModel model = (DefaultTableModel) ProductM.getModel();
+                model.setRowCount(0); // Clear all rows from the table
+
+                // Loop through the query results and add data to the table
+                while (resultSet.next()) {
+                    // Extract data from the result set
+                    String name = resultSet.getString("name");
+                    int quantity = resultSet.getInt("quantity");
+                    int unitPrice = resultSet.getInt("unit_price");
+                    int totalValue = resultSet.getInt("total_value");
+                    Date entryDate = resultSet.getDate("entry_date");
+
+                    // Add the row to the table
+                    Object[] row = {name, quantity, unitPrice, totalValue, entryDate};
+                    model.addRow(row);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
     private void refreshTable(ResultSet resultSet) throws SQLException {
         DefaultTableModel model = (DefaultTableModel) Bill_table.getModel();
         model.setRowCount(0); // Xóa tất cả các hàng hiện tại
@@ -961,29 +1263,6 @@ public class ADMIN1 extends javax.swing.JFrame {
         }
     }
 
-    private void Sale_datePropertyChange(java.beans.PropertyChangeEvent evt) {
-        // Lấy ngày được chọn từ Sale_date
-        java.util.Date selectedDate = Sale_date.getDate();
-
-        String sql = "SELECT * FROM invoice_details WHERE invoice_id = ?";
-        Connection connection = Main.getConnection();
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            // Use getText() to retrieve the text content of ID_bill
-            int idBill = Integer.parseInt(ID_bill.getText().trim());
-            preparedStatement.setInt(1, idBill);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            // Làm mới dữ liệu trong bảng (OrderTable)
-            refreshTable(resultSet);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            System.out.println("Invalid ID format: " + ID_bill.getText());
-        }
-    }
 
 
     /**
@@ -995,39 +1274,46 @@ public class ADMIN1 extends javax.swing.JFrame {
     private javax.swing.JPanel Bill;
     private javax.swing.JTable Bill_table;
     private javax.swing.JTextField ID_bill;
+    private javax.swing.JPanel INPUT;
+    private javax.swing.JButton Input_mouse;
     private javax.swing.JPanel Menu;
     private javax.swing.JPanel Order;
     private javax.swing.JTable OrderTable;
     private javax.swing.JTable ProductM;
     private com.toedter.calendar.JDateChooser ProductMDate;
+    private javax.swing.JTable ProductManagement;
     private javax.swing.JPanel ProductManager;
     private com.toedter.calendar.JDateChooser Sale_date;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel57;
+    private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabel96;
     private javax.swing.JLabel jLabel97;
+    private javax.swing.JLabel jLabel98;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }

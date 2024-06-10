@@ -77,11 +77,11 @@ public class Change_pass extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/user.png"))); // NOI18N
-        jLabel2.setText("USERNAME :");
+        jLabel2.setText("Tên đăng nhập              :");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/password.png"))); // NOI18N
-        jLabel3.setText("NEW PASSWORD :");
+        jLabel3.setText("Mật khẩu                       :");
 
         Username.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         Username.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +109,7 @@ public class Change_pass extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/refresh.png"))); // NOI18N
-        jLabel4.setText("CONFIRM PASSWORD :");
+        jLabel4.setText("Nhập lại mật khẩu       :");
 
         Re_password.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -172,7 +172,7 @@ public class Change_pass extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(Wrong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 35, Short.MAX_VALUE))
+                                .addGap(0, 15, Short.MAX_VALUE))
                             .addComponent(Username)
                             .addComponent(Password)
                             .addComponent(Re_password))))

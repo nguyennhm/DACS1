@@ -149,7 +149,7 @@ public class OrderCheck extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 18, Short.MAX_VALUE)
+                .addGap(0, 26, Short.MAX_VALUE)
                 .addComponent(Picture, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,10 +159,10 @@ public class OrderCheck extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(unit_price, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(unit_price, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                    .addComponent(total_price, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(quantity, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Name, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(total_price, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Name, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(22, 22, 22))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(210, 210, 210)
@@ -240,8 +240,9 @@ public class OrderCheck extends javax.swing.JFrame {
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/Order1.png"))); // NOI18N
 
-        jLabel12.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
-        jLabel12.setText("Order check");
+        jLabel12.setFont(new java.awt.Font("Segoe UI Variable", 1, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Kiểm tra đặt món");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -250,21 +251,21 @@ public class OrderCheck extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel11))
+                        .addGap(25, 25, 25)
+                        .addComponent(jLabel12))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(jLabel12)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addGap(90, 90, 90)
+                        .addComponent(jLabel11)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(67, 67, 67)
                 .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(43, 43, 43)
                 .addComponent(jLabel12)
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -272,12 +273,12 @@ public class OrderCheck extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 221, Short.MAX_VALUE)
+                .addGap(0, 247, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 521, Short.MAX_VALUE)))
+                    .addGap(0, 528, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,42 +301,80 @@ public class OrderCheck extends javax.swing.JFrame {
     // Phương thức chuyển đổi hình ảnh từ JLabel thành mảng byte
 
     private void jButton1MouseClicked(MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
-        String sql1 = "SELECT product_id FROM products WHERE name = ?";
+        // Define SQL queries
+        String selectSql = "SELECT quantity FROM invoice_details WHERE product_name = ? AND invoice_id = ? AND sale_date = ?";
+        String updateSql = "UPDATE invoice_details SET quantity = ?, total_price = ? WHERE product_name = ? AND invoice_id = ? AND sale_date = ?";
+        String updateProductSql = "UPDATE products SET quantity_remain = quantity_remain + ?, total_sold = total_sold + ? WHERE name = ?";
+
+        // Initialize variables
+        int originalQuantity = 0;
         Connection connection = Main.getConnection();
 
+        // Retrieve original quantity from invoice_details
+        try (PreparedStatement selectStatement = connection.prepareStatement(selectSql)) {
+            selectStatement.setString(1, Name.getText());
+            selectStatement.setInt(2, this.id);
 
-        String updateSql = "UPDATE invoices SET quantity = ? WHERE product_name = ? AND invoice_id = ? AND sale_date = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(updateSql)) {
-            preparedStatement.setInt(1, Integer.parseInt(quantity.getText()));
-            preparedStatement.setString(2, Name.getText());
-            preparedStatement.setInt(3, this.id);
             if (this.date != null) {
                 java.sql.Date sqlDate = new java.sql.Date(this.date.getTime());
-                preparedStatement.setDate(4, sqlDate);
+                selectStatement.setDate(3, sqlDate);
             } else {
                 JOptionPane.showMessageDialog(this, "Please select a valid date.", "Error", JOptionPane.ERROR_MESSAGE);
-                preparedStatement.executeUpdate();
-                ADMIN1 ad = new ADMIN1();
-                ad.setTitle("LOGIN");
-                ad.setVisible(true);
-                ad.pack();
-                ad.setLocationRelativeTo(null);
-                this.dispose();
                 return; // Exit the method to prevent executing the query with a null date
             }
-            // Thực thi câu lệnh SQL
-            preparedStatement.executeUpdate();
-            ADMIN1 ad = new ADMIN1();
-            ad.setTitle("LOGIN");
-            ad.setVisible(true);
-            ad.pack();
-            ad.setLocationRelativeTo(null);
-            this.dispose();
+
+            ResultSet resultSet = selectStatement.executeQuery();
+            if (resultSet.next()) {
+                originalQuantity = resultSet.getInt("quantity");
+            } else {
+                JOptionPane.showMessageDialog(this, "No matching records found.", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Exit the method if no matching records found
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Update invoice_details
+        try (PreparedStatement updateStatement = connection.prepareStatement(updateSql)) {
+            updateStatement.setInt(1, Integer.parseInt(quantity.getText()));
+            updateStatement.setInt(2, Integer.parseInt(total_price.getText()));
+            updateStatement.setString(3, Name.getText());
+            updateStatement.setInt(4, this.id);
+
+            if (this.date != null) {
+                java.sql.Date sqlDate = new java.sql.Date(this.date.getTime());
+                updateStatement.setDate(5, sqlDate);
+            } else {
+                JOptionPane.showMessageDialog(this, "Please select a valid date.", "Error", JOptionPane.ERROR_MESSAGE);
+                return; // Exit the method to prevent executing the query with a null date
+            }
+
+            updateStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        // Update products quantity_remain
+        try (PreparedStatement updateProductStatement = connection.prepareStatement(updateProductSql)) {
+            int newQuantity = Integer.parseInt(quantity.getText());
+            updateProductStatement.setInt(1, originalQuantity - newQuantity);
+            updateProductStatement.setInt(2, newQuantity - originalQuantity);
+            updateProductStatement.setString(3, Name.getText());
+            updateProductStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Show the ADMIN1 window
+        ADMIN1 ad = new ADMIN1();
+        ad.setTitle("LOGIN");
+        ad.setVisible(true);
+        ad.pack();
+        ad.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jButton1MouseClicked
+
+
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:

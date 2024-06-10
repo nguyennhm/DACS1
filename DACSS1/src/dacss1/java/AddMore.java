@@ -106,7 +106,7 @@ public class AddMore extends javax.swing.JFrame {
         jLabel2.setText("Số lượng        :");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jLabel3.setText("Đơn giá nhập :");
+        jLabel3.setText("Đơn giá           :");
 
         Name.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         Name.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +146,7 @@ public class AddMore extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jLabel5.setText("Tổng giá nhập:");
+        jLabel5.setText("Tổng giá         :");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel6.setText("Ngày nhập      :");
@@ -168,8 +168,8 @@ public class AddMore extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Showcard Gothic", 0, 36)); // NOI18N
-        jLabel9.setText("Add product");
+        jLabel9.setFont(new java.awt.Font("Segoe UI Variable", 1, 36)); // NOI18N
+        jLabel9.setText("Thêm sản phẩm");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -183,9 +183,6 @@ public class AddMore extends javax.swing.JFrame {
                         .addGap(93, 93, 93)
                         .addComponent(jButton1)
                         .addGap(104, 104, 104))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(124, 124, 124))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(Picture, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -205,16 +202,19 @@ public class AddMore extends javax.swing.JFrame {
                                 .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(Name, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(total_price, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(20, 20, 20))))
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(124, 124, 124))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -280,10 +280,11 @@ public class AddMore extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(0, 153, 255));
         jPanel2.setForeground(new java.awt.Color(51, 51, 255));
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/addproduct.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/addproduct.png"))); // NOI18N
 
-        jLabel8.setFont(new java.awt.Font("Showcard Gothic", 0, 36)); // NOI18N
-        jLabel8.setText("add More");
+        jLabel8.setFont(new java.awt.Font("Segoe UI Variable", 1, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("Thêm sản phẩm");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -305,7 +306,7 @@ public class AddMore extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel8)
-                .addContainerGap(177, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -358,23 +359,39 @@ public class AddMore extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        String updateSql = "UPDATE products SET quantity = quantity + ?, entry_date = ? WHERE name = ? AND product_id = ?";
+        String updateSql = "UPDATE products SET quantity = quantity + ?, quantity_remain = quantity_remain + ? WHERE name = ? AND product_id = ?";
         try (Connection connection = Main.getConnection();
              PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
             updateStmt.setInt(1, Integer.parseInt(quantity.getText()));
-            updateStmt.setDate(2, new java.sql.Date(entry_date.getDate().getTime()));
+            updateStmt.setInt(2, Integer.parseInt(quantity.getText()));
             updateStmt.setString(3, Name.getText());
             updateStmt.setInt(4, id);
             updateStmt.executeUpdate();
-            ADMIN1 ad = new ADMIN1();
-            ad.setTitle("Trang chủ");
-            ad.setVisible(true);
-            ad.pack();
-            ad.setLocationRelativeTo(null);
-            this.dispose();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        Connection connection = Main.getConnection();
+        String sql1 = "INSERT INTO products_detail (name, unit_price, quantity, total_value, entry_date) VALUES ( ?, ?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql1)) {
+            preparedStatement.setString(1, Name.getText()); // Giá trị từ JTextField cho tên sản phẩm
+            preparedStatement.setDouble(2, Integer.parseInt(unit_price.getText())); // Giá trị đơn giá
+            preparedStatement.setInt(3, Integer.parseInt(quantity.getText())); // Giá trị số lượng
+            preparedStatement.setDouble(4, Integer.parseInt(total_price.getText())); // Giá trị tổng giá trị
+            preparedStatement.setDate(5, new java.sql.Date(entry_date.getDate().getTime())); // Giá trị ngày nhập
+            // Thực thi câu lệnh SQL
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        ADMIN1 ad = new ADMIN1();
+        ad.setTitle("Trang chủ");
+        ad.setVisible(true);
+        ad.pack();
+        ad.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked

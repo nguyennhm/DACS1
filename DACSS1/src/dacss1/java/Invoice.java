@@ -33,6 +33,7 @@ public class Invoice extends javax.swing.JFrame {
     public Invoice(String id, java.util.Date selectedDate) {
         initComponents();
         this.id = Integer.parseInt(id);
+        this.selectedDate = selectedDate;
         Invoice_id.setText(String.valueOf(this.id));
         if (selectedDate != null) {
             this.selectedDate = new java.sql.Date(selectedDate.getTime());
@@ -390,27 +391,18 @@ public class Invoice extends javax.swing.JFrame {
                     // Hiển thị JScrollPane nếu có dữ liệu
                     jScrollPane1.setVisible(true);
 
-
                     // Tính chiều cao tổng của JTable
                     int rowCount = model.getRowCount();
                     int rowHeight = Invoice.getRowHeight();
-                    int tableHeight = rowHeight * rowCount + Invoice.getTableHeader().getHeight();
+                    int tableHeight = rowHeight * rowCount;
 
-                    // Đặt kích thước cho JTable
-                    Invoice.setPreferredSize(new Dimension(Invoice.getPreferredSize().width, tableHeight));
+                    // Đặt kích thước cho JTable và JScrollPane
+                    Invoice.setPreferredScrollableViewportSize(new Dimension(Invoice.getPreferredSize().width, tableHeight));
                     jScrollPane1.setPreferredSize(new Dimension(jScrollPane1.getPreferredSize().width, tableHeight));
 
                     // Làm mới JScrollPane và JPanel
                     jScrollPane1.revalidate();
                     jScrollPane1.repaint();
-
-                    // Thiết lập kích thước mới cho JPanel
-                    int width = jScrollPane1.getPreferredSize().width;
-                    int height = tableHeight + 150; // Thêm chiều cao cho phần tổng giá trị và khoảng cách nhỏ
-
-                    // Thiết lập kích thước mới cho JPanel
-                    jPanel1.setPreferredSize(new Dimension(width, height));
-                    jPanel1.setSize(new Dimension(width, height));
 
                     jPanel1.revalidate();
                     jPanel1.repaint();

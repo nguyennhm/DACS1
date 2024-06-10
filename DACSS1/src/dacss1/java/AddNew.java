@@ -57,8 +57,6 @@ public class AddNew extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         Picture = new javax.swing.JLabel();
-        unit_price_out = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -71,29 +69,30 @@ public class AddNew extends javax.swing.JFrame {
 
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/addproduct.png"))); // NOI18N
 
-        jLabel12.setFont(new java.awt.Font("Showcard Gothic", 0, 36)); // NOI18N
-        jLabel12.setText("add new");
+        jLabel12.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("THÊM SẢN PHẨM MỚI");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(79, 79, 79)
+                .addGap(74, 74, 74)
                 .addComponent(jLabel11)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(159, 159, 159)
+                .addGap(127, 127, 127)
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel12)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -106,7 +105,7 @@ public class AddNew extends javax.swing.JFrame {
         jLabel2.setText("Số lượng         :");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jLabel3.setText("Đơn giá nhập  :");
+        jLabel3.setText("Đơn giá           :");
 
         Name.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         Name.addActionListener(new java.awt.event.ActionListener() {
@@ -133,6 +132,7 @@ public class AddNew extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(0, 153, 255));
         jButton1.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Nhập vào kho");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -146,16 +146,17 @@ public class AddNew extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jLabel5.setText("Tổng giá nhập :");
+        jLabel5.setText("Tổng giá         :");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
-        jLabel6.setText("Ngày nhập       :");
+        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel6.setText("Ngày nhập   :");
 
         entry_date.setDateFormatString("yyyy-MM-dd");
         entry_date.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jButton2.setBackground(new java.awt.Color(0, 153, 255));
         jButton2.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Thêm ảnh");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -168,11 +169,12 @@ public class AddNew extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setFont(new java.awt.Font("Showcard Gothic", 0, 36)); // NOI18N
-        jLabel13.setText("Add new");
+        jLabel13.setFont(new java.awt.Font("Segoe UI Variable", 1, 36)); // NOI18N
+        jLabel13.setText("THÊM SẢN PHẨM MỚI");
 
         jButton3.setBackground(new java.awt.Color(0, 153, 255));
         jButton3.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Quay lại");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,90 +182,73 @@ public class AddNew extends javax.swing.JFrame {
             }
         });
 
-        unit_price_out.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel4.setText("Đơn giá bán     :");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(Picture, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel4))
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(entry_date, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
-                                    .addComponent(total_price, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
-                                    .addComponent(unit_price_out)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1))
-                                .addGap(32, 32, 32)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(unit_price, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Name, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addGap(59, 59, 59)
-                        .addComponent(jButton2)
-                        .addGap(56, 56, 56)
-                        .addComponent(jButton1)))
+                .addGap(30, 30, 30)
+                .addComponent(Picture, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(quantity)
+                    .addComponent(unit_price, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(total_price, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(entry_date, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                    .addComponent(Name))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jButton3)
+                .addGap(59, 59, 59)
+                .addComponent(jButton2)
+                .addGap(56, 56, 56)
+                .addComponent(jButton1)
                 .addGap(22, 22, 22))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(189, 189, 189)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(92, 92, 92)
+                .addComponent(jLabel13)
+                .addGap(0, 103, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addComponent(jLabel13)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Picture, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(14, 14, 14)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(unit_price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(14, 14, 14)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(total_price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(unit_price_out, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(entry_date, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(35, 35, 35)
+                            .addComponent(total_price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(entry_date, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Picture, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)))
+                .addGap(91, 91, 91)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
                     .addComponent(jButton1)
@@ -271,8 +256,6 @@ public class AddNew extends javax.swing.JFrame {
                 .addGap(41, 41, 41))
         );
 
-        Name.setEditable(false);
-        unit_price.setEditable(false);
         total_price.setEditable(false);
         DocumentListener documentListener = new DocumentListener() {
             @Override
@@ -339,27 +322,53 @@ public class AddNew extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        String sql = "INSERT INTO products (name, unit_price, quantity, total_value, entry_date, unit_sold, image) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        // Chuỗi SQL để chèn dữ liệu vào bảng products
+        String sql = "INSERT INTO products (name, quantity, image, unit_price, quantity_remain) VALUES (?, ?, ?, ?, ?)";
         Connection connection = Main.getConnection();
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(1, Name.getText()); // Giá trị từ JTextField cho tên sản phẩm
-            preparedStatement.setDouble(2, Double.parseDouble(unit_price.getText())); // Giá trị đơn giá
-            preparedStatement.setInt(3, Integer.parseInt(quantity.getText())); // Giá trị số lượng
-            preparedStatement.setDouble(4, Double.parseDouble(total_price.getText())); // Giá trị tổng giá trị
-            preparedStatement.setDate(5, new java.sql.Date(entry_date.getDate().getTime())); // Giá trị ngày nhập
-            preparedStatement.setInt(6, Integer.parseInt(unit_price_out.getText())); // Giá trị tổng số đã bán
+            preparedStatement.setString(1, Name.getText()); // Lấy giá trị từ JTextField cho tên sản phẩm
+            preparedStatement.setInt(2, Integer.parseInt(quantity.getText())); // Lấy giá trị từ JTextField cho số lượng
+            preparedStatement.setInt(5, Integer.parseInt(quantity.getText())); // Đặt giá trị số lượng còn lại bằng số lượng ban đầu
+            preparedStatement.setDouble(4, Double.parseDouble(unit_price.getText())); // Lấy giá trị từ JTextField cho đơn giá
+
             byte[] imageBytes = imageUpdate(Picture); // Chuyển đổi hình ảnh từ JLabel thành mảng byte
             if (imageBytes != null) {
-                preparedStatement.setBytes(7, imageBytes); // Thiết lập giá trị của BLOB
+                preparedStatement.setBytes(3, imageBytes); // Thiết lập giá trị của BLOB
             } else {
-                preparedStatement.setNull(7, Types.BLOB); // Nếu không có ảnh thì thiết lập giá trị NULL
+                preparedStatement.setNull(3, Types.BLOB); // Nếu không có ảnh thì thiết lập giá trị NULL
             }
+
             // Thực thi câu lệnh SQL
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        // Chuỗi SQL để chèn dữ liệu vào bảng products_detail
+        String sql1 = "INSERT INTO products_detail (name, unit_price, quantity, total_value, entry_date) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql1)) {
+            preparedStatement.setString(1, Name.getText()); // Lấy giá trị từ JTextField cho tên sản phẩm
+            preparedStatement.setDouble(2, Double.parseDouble(unit_price.getText())); // Lấy giá trị từ JTextField cho đơn giá
+            preparedStatement.setInt(3, Integer.parseInt(quantity.getText())); // Lấy giá trị từ JTextField cho số lượng
+            preparedStatement.setDouble(4, Double.parseDouble(total_price.getText())); // Lấy giá trị từ JTextField cho tổng giá trị
+            preparedStatement.setDate(5, new java.sql.Date(entry_date.getDate().getTime())); // Lấy giá trị ngày nhập
+
+            // Thực thi câu lệnh SQL
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        ADMIN1 ad = new ADMIN1();
+        ad.setTitle("Trang chủ");
+        ad.setVisible(true);
+        ad.pack();
+        ad.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jButton1MouseClicked
+//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -370,24 +379,37 @@ public class AddNew extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        // Mở hộp thoại chọn tệp
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
+        // Đặt thư mục mặc định (chỉnh lại tùy theo thư mục chứa ảnh)
+        fileChooser.setCurrentDirectory(new File("D:\\DACSS1\\DACSS1\\src\\Image"));
+
+        // Hiển thị hộp thoại mở tệp
         int result = fileChooser.showOpenDialog(Picture);
+
+        // Kiểm tra xem người dùng đã chọn tệp hay chưa
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             try {
+                // Đọc ảnh từ tệp đã chọn
                 BufferedImage image = ImageIO.read(selectedFile);
-                // Resize the image to fit the label
+
+                // Thay đổi kích thước ảnh để phù hợp với JLabel
                 Image scaledImage = image.getScaledInstance(Picture.getWidth(), Picture.getHeight(), Image.SCALE_SMOOTH);
                 ImageIcon imageIcon = new ImageIcon(scaledImage);
+
+                // Đặt ImageIcon vào JLabel
                 Picture.setIcon(imageIcon);
             } catch (IOException ex) {
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(Picture, "Failed to load image", "Error", JOptionPane.ERROR_MESSAGE);
+                // Hiển thị thông báo lỗi nếu không tải được ảnh
+                JOptionPane.showMessageDialog(Picture, "Không thể tải ảnh", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -467,7 +489,6 @@ public class AddNew extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
@@ -475,6 +496,5 @@ public class AddNew extends javax.swing.JFrame {
     private javax.swing.JTextField quantity;
     private javax.swing.JTextField total_price;
     private javax.swing.JTextField unit_price;
-    private javax.swing.JTextField unit_price_out;
     // End of variables declaration//GEN-END:variables
 }

@@ -24,10 +24,11 @@ public class checkinfo extends javax.swing.JFrame {
     /**
      * Creates new form AddFrame
      */
-    public checkinfo(String name, String unit_price) {
+    public checkinfo(String name) {
         initComponents();
         Name.setText(name);
-        this.unit_price.setText(unit_price);
+
+//        System.out.println(name);
 
 
         String sql = "SELECT * FROM products WHERE name LIKE ?";
@@ -59,6 +60,22 @@ public class checkinfo extends javax.swing.JFrame {
                     // Xử lý trường hợp không có bản ghi nào được tìm thấy
                     Picture.setIcon(null);
                     System.out.println("No product found with the given name.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        String sql1 = "SELECT * FROM products_detail WHERE name LIKE ?";
+        try (PreparedStatement preparedStatement1 = connection.prepareStatement(sql1)) {
+            preparedStatement1.setString(1, "%" + name + "%"); // Use LIKE with wildcard
+
+            try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+                if (resultSet.next()) { // Ensure there is a result
+                    unit_price.setText(String.valueOf(resultSet.getInt("unit_price")));
+                } else {
+                    System.out.println("No product details found for the given name.");
                 }
             }
         } catch (SQLException e) {

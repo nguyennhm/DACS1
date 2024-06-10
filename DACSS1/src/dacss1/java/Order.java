@@ -19,11 +19,12 @@ public class Order extends javax.swing.JFrame {
     /**
      * Creates new form AddFrame
      */
-    public Order(String name, String unit_price, String id) {
+    public Order(String name, String unit_price, String id, java.util.Date selectedDate) {
         initComponents();
         Name.setText(name);
         this.unit_price.setText(unit_price);
         this.id = Integer.parseInt(id);
+        this.date = selectedDate;
 
         String sql = "SELECT * FROM products WHERE name LIKE ?";
         Connection connection = Main.getConnection();
@@ -33,6 +34,7 @@ public class Order extends javax.swing.JFrame {
             preparedStatement.setString(1, "%" + name + "%");  // Sử dụng LIKE với wildcard
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
+                    this.product_id  = resultSet.getInt("product_id");
                     byte[] imgBytes = resultSet.getBytes("image");
                     if (imgBytes != null) {
                         // Chuyển đổi byte[] thành ImageIcon
@@ -97,10 +99,10 @@ public class Order extends javax.swing.JFrame {
         jLabel1.setText("Tên sản phẩm:");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        jLabel2.setText("Số lượng        :");
+        jLabel2.setText("Số lượng         :");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        jLabel3.setText("Đơn giá          :");
+        jLabel3.setText("Đơn giá           :");
 
         Name.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         Name.addActionListener(new java.awt.event.ActionListener() {
@@ -147,27 +149,27 @@ public class Order extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(Picture, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(unit_price, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(quantity, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Name, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(total_price, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(22, 22, 22))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(210, 210, 210)
-                .addComponent(jButton2)
-                .addGap(90, 90, 90)
-                .addComponent(jButton1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(Picture, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(quantity, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                            .addComponent(total_price, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(unit_price, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Name)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(210, 210, 210)
+                        .addComponent(jButton2)
+                        .addGap(90, 90, 90)
+                        .addComponent(jButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -237,33 +239,34 @@ public class Order extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(0, 153, 255));
         jPanel4.setForeground(new java.awt.Color(51, 51, 255));
 
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Order1.png"))); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/dacss1/Resource/Order1.png"))); // NOI18N
 
-        jLabel12.setFont(new java.awt.Font("Showcard Gothic", 0, 36)); // NOI18N
-        jLabel12.setText("order");
+        jLabel12.setFont(new java.awt.Font("Segoe UI Variable", 1, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Đặt món");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(76, 76, 76))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(jLabel11))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(jLabel12)))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(117, 117, 117)
+                .addGap(77, 77, 77)
                 .addComponent(jLabel11)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel12)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -276,7 +279,7 @@ public class Order extends javax.swing.JFrame {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 520, Short.MAX_VALUE)))
+                    .addGap(0, 521, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,44 +302,78 @@ public class Order extends javax.swing.JFrame {
     // Phương thức chuyển đổi hình ảnh từ JLabel thành mảng byte
 
     private void jButton1MouseClicked(MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
-        String sql1 = "SELECT product_id FROM products WHERE name = ?";
-        Connection connection = Main.getConnection();
+        // Define SQL queries
+        String insertSql = "INSERT INTO invoice_details (quantity, total_price, product_name, invoice_id, sale_date, product_id, unit_price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String updateProductSql = "UPDATE products SET quantity_remain = quantity_remain - ?, total_sold = total_sold + ? WHERE name = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql1)) {
-            stmt.setString(1, Name.getText());
+        // Initialize variables
+        Connection connection = null;
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) { // Kiểm tra xem có bản ghi nào không
-                    id_thing = rs.getInt("product_id");
+        try {
+            // Establish the database connection
+            connection = Main.getConnection();
+            connection.setAutoCommit(false); // Enable transaction
+
+            // Insert into invoice_details
+            try (PreparedStatement insertStatement = connection.prepareStatement(insertSql)) {
+                insertStatement.setInt(1, Integer.parseInt(quantity.getText()));
+                insertStatement.setInt(2, Integer.parseInt(total_price.getText()));
+                insertStatement.setString(3, Name.getText());
+                insertStatement.setInt(4, this.id);
+                insertStatement.setInt(6, this.product_id);
+                insertStatement.setInt(7, Integer.parseInt(unit_price.getText()));
+                if (this.date != null) {
+                    java.sql.Date sqlDate = new java.sql.Date(this.date.getTime());
+                    insertStatement.setDate(5, sqlDate);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please select a valid date.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; // Exit the method to prevent executing the query with a null date
+                }
+
+                insertStatement.executeUpdate();
+            }
+
+            // Update products quantity_remain and total_sold
+            try (PreparedStatement updateProductStatement = connection.prepareStatement(updateProductSql)) {
+                int newQuantity = Integer.parseInt(quantity.getText());
+                updateProductStatement.setInt(1, newQuantity);
+                updateProductStatement.setInt(2, newQuantity);
+                updateProductStatement.setString(3, Name.getText());
+                updateProductStatement.executeUpdate();
+            }
+
+            connection.commit(); // Commit transaction if both operations are successful
+
+        } catch (SQLException e) {
+            if (connection != null) {
+                try {
+                    connection.rollback(); // Rollback transaction in case of error
+                } catch (SQLException rollbackEx) {
+                    rollbackEx.printStackTrace();
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-
-
-        String sql = "INSERT INTO invoice_details (invoice_id, product_id, product_name, quantity, unit_price, total_price) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setString(3, Name.getText()); // Giá trị từ JTextField cho tên sản phẩm
-            preparedStatement.setInt(5, Integer.parseInt(unit_price.getText())); // Giá trị đơn giá
-            preparedStatement.setInt(4, Integer.parseInt(quantity.getText())); // Giá trị số lượng
-            preparedStatement.setInt(6, Integer.parseInt(total_price.getText())); // Giá trị tổng giá trị
-            preparedStatement.setInt(1, id);
-            preparedStatement.setInt(2, id_thing);
-            // Thực thi câu lệnh SQL
-            preparedStatement.executeUpdate();
-            ADMIN1 ad = new ADMIN1();
-            ad.setTitle("Trang chủ");
-            ad.setVisible(true);
-            ad.pack();
-            ad.setLocationRelativeTo(null);
-            this.dispose();
-        } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.setAutoCommit(true); // Reset to default state
+                    connection.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
+
+        // Show the ADMIN1 window
+        ADMIN1 ad = new ADMIN1();
+        ad.setTitle("Trang chủ");
+        ad.setVisible(true);
+        ad.pack();
+        ad.setLocationRelativeTo(null);
+        this.dispose();
     }//GEN-LAST:event_jButton1MouseClicked
+
+
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
@@ -354,6 +391,7 @@ public class Order extends javax.swing.JFrame {
     private int id;
     private java.util.Date date;
     private int id_thing;
+    private int product_id;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Name;
     private javax.swing.JLabel Picture;
